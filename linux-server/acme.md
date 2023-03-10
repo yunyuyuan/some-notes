@@ -2,7 +2,7 @@
 
 ## Install acme.sh
 ```sh
-curl https://get.acme.sh | sh -s email=my@example.com
+curl https://get.acme.sh | sh -s email=me@yunyuyuan.net
 ```
 
 ## Export DNS Api Key&Token to `rc` file
