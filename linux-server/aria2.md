@@ -5,7 +5,7 @@
 yay -S aria2
 ```
 
-### Create configuration file
+## Create configuration file
 ```sh
 vim ~/.config/aria2.conf
 ```
