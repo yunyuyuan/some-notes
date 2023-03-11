@@ -1,5 +1,5 @@
-# self-host-starter
-Simply configure your Linux self-hosted machine.
+# Linux server starter
+Simply configure your Linux server machine.
 
 > linux服务器**脚本/自建**笔记
 
