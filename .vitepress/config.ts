@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.vuejs.org/reference/site-config
 export default defineConfig({
-  title: "self-host-starter",
+  title: "Some Notes",
   description: "A VitePress Site",
   themeConfig: {
     // https://vitepress.vuejs.org/reference/default-theme-config
