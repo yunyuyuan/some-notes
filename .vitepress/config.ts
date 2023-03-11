@@ -37,7 +37,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/yunyuyuan/self-host-starter' }
+      { icon: 'github', link: 'https://github.com/yunyuyuan/some-notes' }
     ]
   }
 })
