@@ -33,6 +33,7 @@ export default defineConfig({
         link: '/front-end/README.md',
         collapsed: true,
         items: [
+          { text: 'vertical-center', link: '/front-end/vertical-center' },
         ]
       },
     ],

@@ -7,7 +7,7 @@ Simply configure your Linux server machine.
 * [aria2](/linux-server/aria2)：aria2配置
 * [backup](/linux-server/backup)：备份linux的方案
 * [cf-tunnel](/linux-server/cloudflare-tunnel)：Cloudflare Tunnel的配置
-* [code-server](/linux-server/code-server)：code-server浏览器vscode
+* [code-server](/linux-server/code-server)：浏览器vscode
 * [ddns-cf](/linux-server/ddns-cf)：Cloudflare DDNS的python脚本
 * [interface](/linux-server/interface)：Self-Hosted导航页面
 * [netdata](/linux-server/netdata)：netdata监控

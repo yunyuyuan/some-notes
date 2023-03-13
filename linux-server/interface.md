@@ -1,3 +1,3 @@
 # Interface for services
 
-<<< @/linux-server/interface.html
+<<< @/assets/interface.html

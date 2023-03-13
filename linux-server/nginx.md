@@ -7,4 +7,4 @@ sudo sh -c "openssl passwd -apr1 >> /etc/nginx/auth-pairs"
 ```
 
 ## Nginx conf
-<<< @/linux-server/nginx.conf{nginx}
+<<< @/assets/nginx.conf{nginx}

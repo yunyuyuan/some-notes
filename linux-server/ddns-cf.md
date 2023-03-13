@@ -1,3 +1,3 @@
 # DDNS for cloudflare
 
-<<< @/linux-server/ddns-cf.py
+<<< @/assets/ddns-cf.py
