@@ -29,8 +29,8 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Angular相关',
-        link: '/angular/README.md',
+        text: '前端',
+        link: '/front-end/README.md',
         collapsed: true,
         items: [
         ]
