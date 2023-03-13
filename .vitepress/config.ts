@@ -8,6 +8,7 @@ export default defineConfig({
     // https://vitepress.vuejs.org/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Edit', link: 'https://code-server-cf.yunyuyuan.net/?folder=/codes/some-notes' },
     ],
 
     sidebar: [
