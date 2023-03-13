@@ -37,8 +37,8 @@ The scrollbar will always be displayed.
 
     #wrapper {
       display: inline-block;
-	    vertical-align: middle;
-	    width: calc(100vw - 32px);
+      vertical-align: middle;
+      width: calc(100vw - 32px);
     }
     p {
       height: 100px;
