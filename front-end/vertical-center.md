@@ -6,7 +6,9 @@ The scrollbar will always be displayed.
 
 ## Preview
 
-<video src="/assets/media/vertical-align-center.mp4"></video>
+<video src="/assets/media/vertical-align-center.mp4" autoplay="true" controls="true" loop="true" muted="true"></video>
+
+## Code
 
 ```html
 <!DOCTYPE html>

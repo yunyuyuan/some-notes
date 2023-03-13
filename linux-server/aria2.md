@@ -50,8 +50,7 @@ WantedBy=default.target
 ```
 Start & Enable service
 ```sh
-sudo systemctl start aria2.service
-sudo systemctl enable aria2.service
+sudo systemctl enable --now aria2.service
 ```
 
 ## WebUI for linux server

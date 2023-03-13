@@ -12,8 +12,14 @@
   * `/opt`
 
 ## Use tar to backup
-### `/home/yunyuyuan/my-backup.sh`:
-> [`jq`](https://stedolan.github.io/jq/) needs to be installed first.
+
+::: tip
+[`jq`](https://stedolan.github.io/jq/) needs to be installed first.
+:::
+
+```sh
+vim /home/yunyuyuan/my-backup.sh
+```
 ```sh
 ###### 
 # Change this to your own:
@@ -89,11 +95,16 @@ fi
 echofunc "Running <backup_to_remote>"
 backup_to_remote
 ```
-### `sudo crontab -e`:
-> Recommended to use `logrotate` to control the size of the log.
+## crontab task
+```sh
+sudo crontab -e
+```
 ```sh
 0 0 5 * * sh /home/yunyuyuan/my-backup.sh >> /var/log/my-backup.log
 ```
 
-# Whole System Backup
+::: info 
+Recommended to use `logrotate` to control the size of the log.
+:::
+## Whole System Backup
 TODO

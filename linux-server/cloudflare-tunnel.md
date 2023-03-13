@@ -5,7 +5,10 @@
 # for arch linux
 yay -S cloudflared
 ```
-> If you are using another distro, please refer [install guide](https://github.com/cloudflare/cloudflared/#installing-cloudflared).
+
+::: info
+If you are using another distro, please refer [install guide](https://github.com/cloudflare/cloudflared/#installing-cloudflared).
+:::
 
 ## Create tunnel
 ```sh
@@ -81,9 +84,10 @@ WantedBy=default.target
 ```
 Start & Enable service
 ```sh
-sudo systemctl start cloudflared-tunnel.service
-sudo systemctl enable cloudflared-tunnel.service
+sudo systemctl enable --now cloudflared-tunnel.service
 ```
+
+## Client-side Usage
 
 #### SSH config
 ```ini
