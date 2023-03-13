@@ -8,7 +8,8 @@ yay -S code-server
 ## Config
 ```sh
 vim /data/code-server/config/config.yaml
-
+```
+```sh
 bind-addr: 127.0.0.1:8112
 auth: password
 password: "123456"

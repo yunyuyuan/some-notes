@@ -21,6 +21,7 @@ export default defineConfig({
           { text: 'aria2', link: '/linux-server/aria2' },
           { text: 'backup', link: '/linux-server/backup' },
           { text: 'cf-tunnel', link: '/linux-server/cloudflare-tunnel' },
+          { text: 'code-serevr', link: '/linux-server/code-server' },
           { text: 'ddns-cf', link: '/linux-server/ddns-cf' },
           { text: 'interface', link: '/linux-server/interface' },
           { text: 'netdata', link: '/linux-server/netdata' },
