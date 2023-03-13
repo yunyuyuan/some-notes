@@ -21,7 +21,8 @@ extensions-dir: /data/code-server/config/extensions
 ## Make a service
 ```sh
 sudo vim /etc/systemd/system/code-server.service
-
+```
+```sh
 [Unit]
 Description=code server
 
