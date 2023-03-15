@@ -1,6 +1,6 @@
 # CSS snippets
 
-## SCSS @mixin, `<body class="dark-mode">`
+## SCSS @mixin with `<body class="dark-mode">`
 
 ```scss
 @mixin dark-mode {
