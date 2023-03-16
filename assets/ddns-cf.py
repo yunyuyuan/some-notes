@@ -8,12 +8,23 @@ config = {
     "api_token": "xxx",
     "api_key": "xxx",
     "account_email": "xxx@example.com",
-    "zone_id": "xxxxx",
-    "domain_name": ["i-d", "file-d", "video-d", "aria-d", "status-d", "download-d", "speed-d", "fb-d", 'photo-d', 'git-d'],
+    "zone_id": "xxx",
+    "domain_name": [
+        {
+            "name": "i-d",
+            "type": "AAAA",
+            "proxy": False,
+        },{
+            "name": "file-d",
+            "type": "AAAA",
+            "proxy": False,
+        },{
+            "name": "video-d",
+            "type": "AAAA",
+            "proxy": False,
+        },],
 }
 logFile = '/home/yunyuyuan/ddns/ddns.log'
-ip_type = 'AAAA'
-interval = 300
 
 log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(funcName)s(%(lineno)d) %(message)s')
 
@@ -28,7 +39,9 @@ app_log.setLevel(logging.INFO)
 
 app_log.addHandler(my_handler)
 
-def get_ipv6():
+def get_ip(ip_type):
+    if ip_type == 'A':
+        return requests.get('https://4.ipw.cn').text
     return requests.get('https://6.ipw.cn').text
 
 def cf_api(endpoint, method, headers={}, data=False):
@@ -67,16 +80,16 @@ def ddns():
         app_log.error(f'get domain info error with zones api')
         return
     zone_result_name = response["result"]["name"]
-    for c_domain_name in config["domain_name"]:
-        domain_name = c_domain_name + '.' + zone_result_name
+    for c_domain in config["domain_name"]:
+        domain_name = c_domain["name"] + '.' + zone_result_name
         record = {
-            "type": ip_type,
+            "type": c_domain["type"],
             "name": domain_name,
-            "content": get_ipv6(),
-            "proxied": False,
+            "content": get_ip(c_domain["type"]),
+            "proxied": c_domain["proxy"],
             "ttl": 1
         }
-        dns_records = cf_api("zones/" + config['zone_id'] + f"/dns_records?per_page=100&type={ip_type}&name={domain_name}", "GET")
+        dns_records = cf_api("zones/" + config['zone_id'] + f"/dns_records?per_page=100&type={c_domain['type']}&name={domain_name}", "GET")
         response = {}
         if dns_records['result']:
             # updating
@@ -94,9 +107,7 @@ def ddns():
             app_log.info(f'succeeded set ipv6 to: {record["content"]}.')
 
 if __name__ == '__main__':
-    while 1:
-        try:
-            ddns()
-            time.sleep(interval)
-        except Exception as e:
-            app_log.error(f'error: {str(e)}')
+    try:
+        ddns()
+    except Exception as e:
+        app_log.error(f'error: {str(e)}')
