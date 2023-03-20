@@ -162,6 +162,7 @@
                 <div class="switch-container">
                     <span @click="currentType='direct'" :class="{active: currentType==='direct'}">直连</span>
                     <span @click="currentType='cf'" :class="{active: currentType==='cf'}">cf tunnel</span>
+                    <span @click="currentType='cdn'" :class="{active: currentType==='cdn'}">cf cdn</span>
                     <span @click="currentType='vpn'" :class="{active: currentType==='vpn'}">vpn</span>
                 </div>
                 <div class="units" v-for="machine of machines">
@@ -181,7 +182,7 @@
                 currentType.value = 'cf';
             })
             
-            function getDomainRef(direct, cf='', vpn='') {
+            function getDomainRef(direct, cf='', vpn='', cdn='') {
                 return Vue.computed(() => {
                     switch (currentType.value) {
                         case 'direct':
@@ -190,6 +191,8 @@
                             return cf;
                         case 'vpn':
                             return vpn;
+                        case 'cdn':
+                            return cdn;
                     }
                 })
             }
@@ -197,11 +200,11 @@
             function commonRef(s, withPort = true) {
 		        return getDomainRef(`https://${s}-d.yunyuyuan.net${withPort ? ':8888': ''}`, 
                                     `https://${s}-cf.yunyuyuan.net`,
-                                    `https://${s}-v.yunyuyuan.net`);
+                                    `https://${s}-v.yunyuyuan.net`, withPort ? '' : `https://${s}-cdn.yunyuyuan.net`);
             }
             
             function sameRef(s) {
-                return getDomainRef(s, s, s);
+                return getDomainRef(s, s, s, s);
             }
             
             function clickEvent(e, domain) {
@@ -265,6 +268,10 @@
                                 domain: commonRef('git'),
                             },
                             {
+                                name: 'code-server',
+                                domain: commonRef('code-server'),
+                            },
+                            {
                                 name: 'ttyd',
                                 domain: commonRef('ttyd'),
                             },
@@ -274,11 +281,11 @@
                             },
                             {
                                 name: 'SSH-CF',
-                                domain: getDomainRef('', `https://ssh-cf.yunyuyuan.net`, ''),
+                                domain: getDomainRef('', `https://ssh-cf.yunyuyuan.net`, '', ''),
                             },
                             {
                                 name: 'VNC-CF',
-                                domain: getDomainRef('', `https://vnc-cf.yunyuyuan.net`, ''),
+                                domain: getDomainRef('', `https://vnc-cf.yunyuyuan.net`, '', ''),
                             },
                         ],
                     },
@@ -292,15 +299,19 @@
                             },
                             {
                                 name: 'ttyd',
-                                domain: commonRef('ttyd-sw'),
+                                domain: commonRef('ttyd-sw', false),
                             },
                             {
                                 name: '测速',
-                                domain: commonRef('speed-sw'),
+                                domain: commonRef('speed-sw', false),
+                            },
+                            {
+                                name: 'oss filebrowser',
+                                domain: commonRef('fb-sw', false),
                             },
                             {
                                 name: 'SSH-CF',
-                                domain: getDomainRef('', `https://ssh-sw-cf.yunyuyuan.net`, ''),
+                                domain: getDomainRef('', `https://ssh-sw-cf.yunyuyuan.net`, '', ''),
                             },
                         ],
                     },
@@ -317,11 +328,11 @@
                             },
                             {
                                 name: 'SSH-CF',
-                                domain: getDomainRef('', `https://ssh-pi-cf.yunyuyuan.net`, ''),
+                                domain: getDomainRef('', `https://ssh-pi-cf.yunyuyuan.net`, '', ''),
                             },
                             {
                                 name: 'VNC-CF',
-                                domain: getDomainRef('', `https://vnc-pi-cf.yunyuyuan.net`, ''),
+                                domain: getDomainRef('', `https://vnc-pi-cf.yunyuyuan.net`, '', ''),
                             },
                         ],
                     },
@@ -330,11 +341,11 @@
                         domains: [
                             {
                                 name: '路由器',
-                                domain: getDomainRef('http://router-d.yunyuyuan.net:8888', '', 'http://router-v.yunyuyuan.net'),
+                                domain: getDomainRef('http://router-d.yunyuyuan.net:8888', '', 'http://router-v.yunyuyuan.net', ''),
                             },
                             {
                                 name: 'ttyd',
-                                domain: getDomainRef('http://router-d.yunyuyuan.net:7681', '', 'http://router-v.yunyuyuan.net:7681'),
+                                domain: getDomainRef('http://router-d.yunyuyuan.net:7681', '', 'http://router-v.yunyuyuan.net:7681', ''),
                             },
                         ],
                     },
