@@ -38,6 +38,14 @@ export default defineConfig({
           { text: 'css', link: '/front-end/css' },
         ]
       },
+      {
+        text: '脚本',
+        link: '/scripts/README.md',
+        collapsed: true,
+        items: [
+          { text: 'batch-rename', link: '/scripts/batch-rename' },
+        ]
+      },
     ],
 
     socialLinks: [
