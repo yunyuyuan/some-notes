@@ -15,9 +15,13 @@ def get_args():
 def batch_rename():
     args = get_args()
     replace_map = [[item, sub(args.source, args.dist, item)] for item in os.listdir(args.folder)]
+    results = [x[1] for x in replace_map]
     print('Preview:')
     for pair in replace_map:
         print(f'{pair[0]} -> {pair[1]}')
+    if any(results.count(item) > 1 for item in results):
+        print('Error!!!There is a file with the same name in the result. Aborting.')
+        exit()
     confirm = input('Confirm?(y/N)')
     if confirm.lower() == 'y':
         for pair in replace_map:
