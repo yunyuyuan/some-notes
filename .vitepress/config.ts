@@ -14,7 +14,6 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Linux 服务器相关',
-        link: '/linux-server/README.md',
         collapsed: true,
         items: [
           { text: 'acme.sh', link: '/linux-server/acme' },
@@ -31,7 +30,6 @@ export default defineConfig({
       },
       {
         text: '前端',
-        link: '/front-end/README.md',
         collapsed: true,
         items: [
           { text: 'vertical-center', link: '/front-end/vertical-center' },
@@ -40,7 +38,6 @@ export default defineConfig({
       },
       {
         text: '脚本',
-        link: '/scripts/README.md',
         collapsed: true,
         items: [
           { text: 'batch-rename', link: '/scripts/batch-rename' },
