@@ -11,6 +11,12 @@ export default defineConfig({
       { text: 'Edit', link: 'https://code-server-cf.yunyuyuan.net/?folder=/opt/codes/some-notes' },
     ],
 
+    algolia: {
+      appId: 'UX7BHMEFLB',
+      apiKey: 'b2813fef888fb39b177d35d0c444921e',
+      indexName: 'some-yunyuyuan'
+    },
+
     sidebar: [
       {
         text: 'Linux 服务器相关',
