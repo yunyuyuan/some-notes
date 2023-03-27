@@ -25,7 +25,7 @@ The scrollbar will always be displayed.
     #container {
       display: block;
       height: 100%;
-	    overflow-y: scroll;
+      overflow-y: scroll;
     }
     #container:before {
       display: inline-block;
