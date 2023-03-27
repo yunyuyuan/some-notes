@@ -12,9 +12,8 @@ def get_args():
     args = parser.parse_args()
     return args
 
-def batch_rename():
-    args = get_args()
-    replace_map = [[item, sub(args.source, args.dist, item)] for item in os.listdir(args.folder)]
+def batch_rename(source, dist, files):
+    replace_map = [item for item in ([item, sub(source, dist, item)] for item in files) if item[0] != item[1]]
     results = [x[1] for x in replace_map]
     print('Preview:')
     for pair in replace_map:
@@ -24,6 +23,14 @@ def batch_rename():
         exit()
     confirm = input('Confirm?(y/N)')
     if confirm.lower() == 'y':
+        return replace_map
+    return []
+
+if __name__ == '__main__':
+    args = get_args()
+    files = os.listdir(args.folder)
+    replace_map = batch_rename(args.source, args.dist, files)
+    if replace_map:
         for pair in replace_map:
             os.rename(
                 os.path.join(args.folder, pair[0]), 
@@ -32,6 +39,3 @@ def batch_rename():
         print('Succeed!')
     else:
         print("Nothing to do")
-
-if __name__ == '__main__':
-    batch_rename()
