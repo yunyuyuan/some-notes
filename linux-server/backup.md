@@ -22,10 +22,11 @@ vim /home/yunyuyuan/my-backup.sh
 ```
 ```sh
 ###### 
-# Change this to your own:
+# Change this:
 USER=yunyuyuan
 USER_DIR=/home/$USER
 BACKUP_DIR=$USER_DIR/backups
+MARIADB_FILE=mariadb.sql
 MARIADB_APP=mariadb-app
 MARIADB_USER=root
 MARIADB_PWD=xxx
@@ -51,19 +52,21 @@ backup_to_remote() {
 }
 ######
 
+# change work dir to /
+cd /
+
 echofunc() {
   echo "$(date +"%Y-%m-%d %T") <----- $1 ----->"
 }
 
 if ! [[ -e $BACKUP_DIR ]]; then
-  echofunc "Creating backup directory: $BACKUP_DIR"
+  echofunc "Creating backupdir: $BACKUP_DIR"
   mkdir -m 744 $BACKUP_DIR
 fi
 
 # create mariadb.sql
-MARIADB_FILE=$BACKUP_DIR/mariadb.sql
 echofunc "Creating MariaDB backup"
-docker exec $MARIADB_APP /usr/bin/mysqldump -h '127.0.0.1' -u $MARIADB_USER --password=$MARIADB_PWD --all-databases > $MARIADB_FILE
+docker exec $MARIADB_APP /usr/bin/mysqldump -h '127.0.0.1' -u $MARIADB_USER --password=$MARIADB_PWD -A > $MARIADB_FILE
 
 # create backup.tar
 BACKUP_FILE=$BACKUP_DIR/backup_$(date +"%Y-%m-%d_%H-%M-%S").tar.gz
@@ -72,14 +75,18 @@ tar \
   --exclude="$BACKUP_DIR" \
   --exclude="$USER_DIR/go" \
   --exclude="$USER_DIR/.cache" \
+  --exclude="$USER_DIR/.npm" \
+  --exclude="$USER_DIR/.nuget" \
   --exclude="$USER_DIR/.vscode-server" \
-  --exclude="/data/next-cloud/data/**/appdata_*/preview/" \
-  --exclude="/data/next-cloud/data/**/cache/" \
-  --exclude="/data/next-cloud/data/**/files_trashbin/" \
+  --exclude="/data/next-cloud/data/appdata_*/preview" \
+  --exclude="/data/next-cloud/data/data/appdata_*/preview" \
+  --exclude="/data/next-cloud/data/**/cache" \
+  --exclude="/data/next-cloud/data/**/files_trashbin" \
+  --exclude="/data/jellyfin/config/data/transcodes/*" \
   -czf $BACKUP_FILE \
   $NEED_BACKUP $MARIADB_FILE
 
-# remove backup sql
+# remove backup.sql
 echofunc "Removing <$MARIADB_FILE>"
 rm "$MARIADB_FILE"
 
@@ -90,6 +97,7 @@ if (($REMOVE_COUNT > 0));then
   cd $BACKUP_DIR 
   rm "$(ls $BACKUP_DIR -t | tail -$REMOVE_COUNT)"
 fi
+chown -R $USER $BACKUP_DIR
 
 # sync all backup.tar to External Driver or Cloud Driver
 echofunc "Running <backup_to_remote>"
