@@ -50,6 +50,13 @@ export default defineConfig({
           { text: 'batch-rename', link: '/scripts/batch-rename' },
         ]
       },
+      {
+        text: '速记',
+        collapsed: true,
+        items: [
+          { text: 'git-multiple-user', link: '/snippets/git-domain-map-user' },
+        ]
+      },
     ],
 
     socialLinks: [

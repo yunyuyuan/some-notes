@@ -21,3 +21,5 @@
   * [diagonal](/front-end/diagonal)：自适应对角线
 * **scripts**: 一些实用脚本
   * [batch-rename](/scripts/batch-rename)：批量重命名python脚本
+* **snippets**: 速记，参考
+  * [git-multiple-user](/snippets/git-domain-map-user)：批量重命名python脚本
