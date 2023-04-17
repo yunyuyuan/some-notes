@@ -39,7 +39,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'vertical-center', link: '/front-end/vertical-center' },
-          { text: 'css', link: '/front-end/css' },
+          { text: 'dark-mode', link: '/front-end/dark-mode' },
         ]
       },
       {

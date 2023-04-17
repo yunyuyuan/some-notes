@@ -17,6 +17,6 @@
   * [openwrt](/linux-server/openwrt)：Openwrt的一些命令
 * **front-end**: 一些前端相关的知识
   * [vertical-center](/front-end/vertical-center)：html自适应垂直居中
-  * [css](/front-end/css)：一些css/sass代码
+  * [dark-mode](/front-end/dark-mode)：dark mode简单实现
 * **scripts**: 一些实用脚本
   * [batch-rename](/scripts/batch-rename)：批量重命名python脚本

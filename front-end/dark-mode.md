@@ -1,4 +1,4 @@
-# CSS snippets
+# Dark Mode
 
 ## SCSS @mixin with `<body class="dark-mode">`
 

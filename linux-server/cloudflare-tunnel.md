@@ -59,6 +59,8 @@ vim ~/tunnel-dns.sh
 /usr/bin/cloudflared tunnel route dns my-tunnel aria.yunyuyuan.net
 # run tunnel
 /usr/bin/cloudflared tunnel run my-tunnel
+# or ipv6 priority
+# /usr/bin/cloudflared --edge-ip-version=6 tunnel run my-tunnel
 ```
 
 ## Create tunnel service
