@@ -40,6 +40,7 @@ export default defineConfig({
         items: [
           { text: 'vertical-center', link: '/front-end/vertical-center' },
           { text: 'dark-mode', link: '/front-end/dark-mode' },
+          { text: 'diagonal', link: '/front-end/diagonal' },
         ]
       },
       {
