@@ -99,6 +99,11 @@
         "file": "git-domain-map-user",
         "name": "git-multiple-user",
         "description": "git多域名与多用户"
+      },
+      {
+        "file": "neovim",
+        "name": "neovim",
+        "description": "neovim配置"
       }
     ]
   }
