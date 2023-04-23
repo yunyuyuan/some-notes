@@ -1,0 +1,105 @@
+[
+  {
+    "dir": "linux-server",
+    "title": "Linux 服务器",
+    "description": "关于linux服务器的一些配置/服务",
+    "children": [
+      {
+        "file": "acme",
+        "name": "acme.sh",
+        "description": "acme.sh获取/更新TLS证书"
+      },
+      {
+        "file": "aria2",
+        "name": "aria2",
+        "description": "aria2配置"
+      },
+      {
+        "file": "backup",
+        "name": "backup",
+        "description": "备份linux的方案"
+      },
+      {
+        "file": "cloudflare-tunnel",
+        "name": "cf-tunnel",
+        "description": "Cloudflare Tunnel的配置"
+      },
+      {
+        "file": "code-server",
+        "name": "code-server",
+        "description": "浏览器vscode"
+      },
+      {
+        "file": "ddns-cf",
+        "name": "ddns-cf",
+        "description": "Cloudflare DDNS的python脚本"
+      },
+      {
+        "file": "interface",
+        "name": "interface",
+        "description": "Self-Hosted导航页面"
+      },
+      {
+        "file": "netdata",
+        "name": "netdata",
+        "description": "netdata监控"
+      },
+      {
+        "file": "nginx",
+        "name": "nginx",
+        "description": "Nginx的一些示例"
+      },
+      {
+        "file": "openwrt",
+        "name": "openwrt",
+        "description": "Openwrt的一些命令"
+      }
+    ]
+  },
+  {
+    "dir": "front-end",
+    "title": "前端",
+    "description": "一些前端相关的知识",
+    "children": [
+      {
+        "file": "vertical-center",
+        "name": "vertical-center",
+        "description": "html自适应垂直居中"
+      },
+      {
+        "file": "dark-mode",
+        "name": "dark-mode",
+        "description": "dark mode简单实现"
+      },
+      {
+        "file": "diagonal",
+        "name": "diagonal",
+        "description": "自适应对角线"
+      }
+    ]
+  },
+  {
+    "dir": "scripts",
+    "title": "脚本",
+    "description": "一些实用脚本",
+    "children": [
+      {
+        "file": "batch-rename",
+        "name": "batch-rename",
+        "description": "批量重命名python脚本"
+      }
+    ]
+  },
+  {
+    "dir": "snippets",
+    "title": "速记",
+    "description": "速记，参考",
+    "children": [
+      {
+        "file": "git-domain-map-user",
+        "name": "git-multiple-user",
+        "description": "git多域名与多用户"
+      }
+    ]
+  }
+]
