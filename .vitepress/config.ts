@@ -55,6 +55,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'git-multiple-user', link: '/snippets/git-domain-map-user' },
+          { text: 'neovim', link: '/snippets/neovim' },
         ]
       },
     ],

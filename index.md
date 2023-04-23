@@ -23,3 +23,4 @@
   * [batch-rename](/scripts/batch-rename)：批量重命名python脚本
 * **snippets**: 速记，参考
   * [git-multiple-user](/snippets/git-domain-map-user)：git多域名与多用户
+  * [neovim](/snippets/neovim)：neovim的配置
