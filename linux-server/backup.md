@@ -83,6 +83,7 @@ tar \
   --exclude="/data/next-cloud/data/**/cache" \
   --exclude="/data/next-cloud/data/**/files_trashbin" \
   --exclude="/data/jellyfin/config/data/transcodes/*" \
+  --exclude="*/cache/*" \
   -czf $BACKUP_FILE \
   $NEED_BACKUP $MARIADB_FILE
 

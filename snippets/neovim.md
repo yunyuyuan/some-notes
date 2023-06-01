@@ -29,6 +29,12 @@ require("lazy").setup({
     config = function ()
         require("hop").setup()
     end,
+  },
+  {
+    "tpope/vim-surround"
+  },
+  {
+    "tpope/vim-repeat"
   }
 })
 
