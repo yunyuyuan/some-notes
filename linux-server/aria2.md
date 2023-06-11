@@ -25,6 +25,7 @@ max-overall-download-limit=0
 min-split-size=5M
 enable-http-pipelining=true
 allow-overwrite=true
+follow-torrent=false
 
 enable-rpc=true
 rpc-listen-all=true
