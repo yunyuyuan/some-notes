@@ -178,7 +178,10 @@
     Vue.createApp({
         setup() {
             const currentType = Vue.ref('direct');
-            fetch('https://6.ipw.cn').then(() => {
+            fetch('https://ipv6-test.yunyuyuan.net').then((res) => {
+                if (res.status !== 200) {
+                    currentType.value = 'cf';
+                }
             }).catch(() => {
                 currentType.value = 'cf';
             })
