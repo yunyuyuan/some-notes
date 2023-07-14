@@ -53,6 +53,11 @@
         "file": "openwrt",
         "name": "openwrt",
         "description": "Openwrt的一些命令"
+      },
+      {
+        "file": "dedit",
+        "name": "dedit",
+        "description": "docker修改container文件"
       }
     ]
   },
