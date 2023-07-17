@@ -34,6 +34,12 @@ require("lazy").setup({
     "tpope/vim-surround"
   },
   {
+    "matze/vim-move",
+    init = function()
+      vim.g.move_key_modifier_visualmode = 'S'
+    end,
+  },
+  {
     "tpope/vim-repeat"
   }
 })
