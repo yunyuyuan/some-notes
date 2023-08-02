@@ -16,6 +16,11 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+vim.g.mapleader = ","
+
+vim.api.nvim_set_keymap('n', '<leader>m', '<cmd>lua require"hop".hint_words()<CR>', { silent = true })
+vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
+
 
 require("lazy").setup({
   {
@@ -31,7 +36,7 @@ require("lazy").setup({
     end,
   },
   {
-    "tpope/vim-surround"
+    "tpope/vim-surround",
   },
   {
     "matze/vim-move",
@@ -40,8 +45,8 @@ require("lazy").setup({
     end,
   },
   {
-    "tpope/vim-repeat"
-  }
+    "tpope/vim-repeat",
+  },
 })
 
 ```
