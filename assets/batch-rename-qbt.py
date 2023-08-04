@@ -72,7 +72,7 @@ if __name__ == '__main__':
                 if replace_map:
                     for pair in replace_map:
                         s.post('/api/v2/torrents/renameFile', {
-                            "hash": hash,
+                            "hash": selected_hash,
                             "oldPath": pair[0],
                             "newPath": pair[1]
                         })
