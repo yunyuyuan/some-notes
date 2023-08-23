@@ -109,6 +109,11 @@
         "file": "neovim",
         "name": "neovim",
         "description": "neovim配置"
+      },
+      {
+        "file": "rclone",
+        "name": "rclone",
+        "description": "rclone配置"
       }
     ]
   }
