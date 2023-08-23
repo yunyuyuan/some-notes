@@ -8,5 +8,5 @@
 
 ## mount crypt
 ```bash
-rclone mount my-encrypted: ~/Encrypted --vfs-cache-mode=full
+rclone mount my-encrypted: ~/Encrypted --vfs-cache-mode=full --verbose
 ```
