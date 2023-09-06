@@ -101,8 +101,8 @@
     "description": "速记，参考",
     "children": [
       {
-        "file": "git-domain-map-user",
-        "name": "git-multiple-user",
+        "file": "git-multiple-users",
+        "name": "git-multiple-users",
         "description": "git多域名与多用户"
       },
       {
