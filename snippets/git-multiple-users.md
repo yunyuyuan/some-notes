@@ -53,3 +53,14 @@ Host github.com-another
 git clone git@github.com:default_user/xxx.git
 git clone git@github.com-another:another_user/xxx.git
 ```
+
+# 3. Custom SSH port
+```sh
+vim ~/.ssh/config
+```
+```ini
+Host git.example.com
+  HostName git.example.com
+  User git
+  Port 222
+```
