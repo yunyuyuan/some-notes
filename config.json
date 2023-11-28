@@ -111,6 +111,11 @@
         "description": "neovim配置"
       },
       {
+        "file": "random-string",
+        "name": "random-string",
+        "description": "随机字符串"
+      },
+      {
         "file": "rclone",
         "name": "rclone",
         "description": "rclone配置"
