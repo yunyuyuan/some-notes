@@ -119,6 +119,11 @@
         "file": "rclone",
         "name": "rclone",
         "description": "rclone配置"
+      },
+      {
+        "file": "python-logger",
+        "name": "python-logger",
+        "description": "Python日志器"
       }
     ]
   }
