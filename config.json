@@ -124,6 +124,11 @@
         "file": "python-logger",
         "name": "python-logger",
         "description": "Python日志器"
+      },
+      {
+        "file": "ssh-forward-port",
+        "name": "ssh-forward-port",
+        "description": "ssh转发端口"
       }
     ]
   }
