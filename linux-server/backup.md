@@ -30,7 +30,7 @@ MARIADB_FILE=mariadb.sql
 MARIADB_APP=mariadb-app
 MARIADB_USER=root
 MARIADB_PWD=xxx
-NEED_BACKUP="/etc /home /boot /root /var/www /data"
+NEED_BACKUP="/etc /home /boot /root /var/www /var/spool /data"
 # Retain the 5 most recent backup files
 MAX_BACKUP_FILE_COUNT=5
 # Backup-To-Remote Function, my remote is nextcloud
@@ -66,24 +66,30 @@ fi
 
 # create mariadb.sql
 echofunc "Creating MariaDB backup"
-docker exec $MARIADB_APP /usr/bin/mysqldump -h '127.0.0.1' -u $MARIADB_USER --password=$MARIADB_PWD -A > $MARIADB_FILE
+docker exec $MARIADB_APP /usr/bin/mysqldump -h '127.0.0.1' -u $MARIADB_USER --password=$MARIADB_PWD --all-databases --routines --triggers --events > $MARIADB_FILE
 
 # create backup.tar
 BACKUP_FILE=$BACKUP_DIR/backup_$(date +"%Y-%m-%d_%H-%M-%S").tar.gz
 echofunc "Creating backup <$BACKUP_FILE>"
 tar \
   --exclude="$BACKUP_DIR" \
+  --exclude="**/cache" \
+  --exclude="**/.cache" \
+  --exclude="**/tmp" \
+  --exclude="**/*.log" \
+  --exclude="**/*.log.*" \
   --exclude="$USER_DIR/go" \
-  --exclude="$USER_DIR/.cache" \
+  --exclude="$USER_DIR/.nvm" \
+  --exclude="$USER_DIR/.arduino*" \
+  --exclude="$USER_DIR/.local/share/pnpm" \
   --exclude="$USER_DIR/.npm" \
   --exclude="$USER_DIR/.nuget" \
   --exclude="$USER_DIR/.vscode-server" \
-  --exclude="/data/next-cloud/data/appdata_*/preview" \
-  --exclude="/data/next-cloud/data/data/appdata_*/preview" \
-  --exclude="/data/next-cloud/data/**/cache" \
+  --exclude="/data/next-cloud/data/**/preview" \
   --exclude="/data/next-cloud/data/**/files_trashbin" \
-  --exclude="/data/jellyfin/config/data/transcodes/*" \
-  --exclude="*/cache/*" \
+  --exclude="/data/jellyfin/config/data/metadata/library" \
+  --exclude="/data/jellyfin/config/data/transcodes" \
+  --exclude="/data/immich" \
   -czf $BACKUP_FILE \
   $NEED_BACKUP $MARIADB_FILE
 
@@ -103,6 +109,10 @@ chown -R $USER $BACKUP_DIR
 # sync all backup.tar to External Driver or Cloud Driver
 echofunc "Running <backup_to_remote>"
 backup_to_remote
+```
+## restore mysql
+```sh
+docker exec mariadb-app /usr/bin/mysqldump -h '127.0.0.1' -u $MARIADB_USER --password=$MARIADB_PWD --all-databases --routines --triggers --events > mariadb.sql
 ```
 ## crontab task
 ```sh
