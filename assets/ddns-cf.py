@@ -2,9 +2,25 @@ import time
 import socket
 import requests
 import subprocess
-
+from pathlib import Path
 import logging
-from logging.handlers import RotatingFileHandler
+import logging.handlers
+
+def setup_logger(log_file, max_bytes, backup_count):
+    logger = logging.getLogger('my_logger')
+    logger.setLevel(logging.INFO)
+
+    handler = logging.handlers.RotatingFileHandler(
+        log_file, maxBytes=max_bytes, backupCount=backup_count)
+
+    formatter = logging.Formatter('%(asctime)s - %(message)s')
+    handler.setFormatter(formatter)
+
+    logger.addHandler(handler)
+
+    return logger
+    
+logger = setup_logger(Path(__file__).parent.absolute() / 'ddns-cf.log', 1024*1024, 2)
 
 config = {
     "api_token": "xxx",
@@ -24,22 +40,8 @@ config = {
             "name": "video",
         }],
 }
-logFile = '/home/yunyuyuan/ddns/ddns.log'
 
-log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(funcName)s(%(lineno)d) %(message)s')
-
-
-my_handler = RotatingFileHandler(logFile, mode='a', maxBytes=1024*1024,
-                                 backupCount=2, encoding=None, delay=False)
-my_handler.setFormatter(log_formatter)
-my_handler.setLevel(logging.INFO)
-
-app_log = logging.getLogger('root')
-app_log.setLevel(logging.INFO)
-
-app_log.addHandler(my_handler)
-
-def get_dynamic_ipv6_address(interface="eth0"):
+def get_dynamic_ipv6_address(interface="ens18"):
     try:
         # Run the 'ip -6 addr show' command to get the IPv6 address for the interface
         result = subprocess.run(['ip', '-6', 'addr', 'show', interface], capture_output=True, text=True, check=True)
@@ -52,19 +54,9 @@ def get_dynamic_ipv6_address(interface="eth0"):
                 address = line.split()[1].split('/')[0]
                 return address
     except subprocess.CalledProcessError as e:
-        app_log.error(f"Failed to get IPv6 address for interface {interface}. Error: {e}")
+        logger.error(f"Failed to get IPv6 address for interface {interface}. Error: {e}")
     return None
 
-## for Windows
-# def get_dynamic_ipv6_address():
-#     file = path.abspath('ipv6.ps1') # content of ipv6.ps1:  Get-NetIPAddress -AddressFamily IPv6 | Where-Object { $_.PrefixOrigin -eq 'RouterAdvertisement' -and $_.AddressState -eq 'Preferred' }
-#     output = str(subprocess.Popen(['powershell.exe', file], stdout=subprocess.PIPE, universal_newlines=True).communicate()[0])
-#     for item in output.split('\n\n'):
-#         ip: re.Match = re.search('IPAddress\s*:\s*([0-9a-zA-Z:]+)', item)
-#         interface: re.Match = re.search('InterfaceAlias\s*:\s*(.+)', item)
-#         prefix_length: re.Match = re.search('PrefixLength\s*:\s*(\d+)', item)
-#         if ip and interface.groups()[0].lower() == 'wlan' and prefix_length.groups()[0] == '64':
-#             return ip.groups()[0]
 
 def get_ip(ip_type):
     if ip_type == 'LOCAL':
@@ -95,11 +87,11 @@ def cf_api(endpoint, method, headers={}, data=False):
         if response.ok:
             return response.json()
         else:
-            app_log.error("Error sending '" + method +
+            logger.error("Error sending '" + method +
                   "' request to '" + response.url + "':" + response.text)
             return None
     except Exception as e:
-        app_log.error("An exception occurred while sending '" +
+        logger.error("An exception occurred while sending '" +
               method + "' request to '" + endpoint + "': " + str(e))
         return None
 
@@ -119,23 +111,23 @@ def call_api(domain_suffix, c_domain, domain_type):
     response = {}
     if dns_records['result']:
         # updating
-        app_log.info(f'updating {domain_name} with {domain_content}')
+        logger.info(f'updating {domain_name} with {domain_content}')
         dns_record = dns_records['result'][0]
         if dns_record['content'] == record['content']:
-            app_log.info(f'local ip: {record["content"]} same to server, no need to update.')
+            logger.info(f'local ip: {record["content"]} same to server, no need to update.')
         else:
             response = cf_api("zones/" + config['zone_id'] + "/dns_records/" + dns_record['id'], "PUT", {}, record)
     else:
         # creating
-        app_log.info(f'creating {domain_name} with {domain_content}')
+        logger.info(f'creating {domain_name} with {domain_content}')
         response = cf_api("zones/" + config['zone_id'] + "/dns_records", "POST", {}, record)
     if response and response.get('success', None):
-        app_log.info(f'succeeded set ip to: {record["content"]}.')
+        logger.info(f'succeeded set ip to: {record["content"]}.')
 
 def ddns():
     response = cf_api("zones/" + config['zone_id'], "GET")
     if response is None or response["result"]["name"] is None:
-        app_log.error(f'get domain info error with zones api')
+        logger.error(f'get domain info error with zones api')
         return
     zone_result_name = response["result"]["name"]
     for c_domain in config["domain_name"]:
@@ -147,13 +139,4 @@ if __name__ == '__main__':
     try:
         ddns()
     except Exception as e:
-        app_log.error(f'error: {str(e)}')
-    
-    # import time
-    # while True:
-    #     try:
-    #         ddns()
-    #     except Exception as e:
-    #         app_log.error(f'error: {str(e)}')
-        
-    #     time.sleep(600)
+        logger.error(f'error: {str(e)}')
