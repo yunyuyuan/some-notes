@@ -112,7 +112,9 @@ backup_to_remote
 ```
 ## restore mysql
 ```sh
-docker exec mariadb-app /usr/bin/mysqldump -h '127.0.0.1' -u $MARIADB_USER --password=$MARIADB_PWD --all-databases --routines --triggers --events > mariadb.sql
+docker cp mariadb.sql mariadb-app:/
+docker exec -it mariadb-app /bin/sh
+mysql -u $MARIADB_USER --password=$MARIADB_PWD < mariadb.sql
 ```
 ## crontab task
 ```sh
