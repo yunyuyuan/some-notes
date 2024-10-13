@@ -26,16 +26,12 @@ vim /home/yunyuyuan/my-backup.sh
 USER=yunyuyuan
 USER_DIR=/home/$USER
 BACKUP_DIR=$USER_DIR/backups
-MARIADB_FILE=mariadb.sql
-MARIADB_APP=mariadb-app
-MARIADB_USER=root
-MARIADB_PWD=xxx
-NEED_BACKUP="/etc /home /boot /root /var/www /var/spool /data"
 # Retain the 5 most recent backup files
 MAX_BACKUP_FILE_COUNT=5
 # Backup-To-Remote Function, my remote is nextcloud
 backup_to_remote() {
-  REMOTE_DIR=nextcloud:/path/to/mybackupdir
+  # REMOTE_DIR=nextcloud:/arch-backups
+  REMOTE_DIR=/mnt/HDD/arch-backups
   LOCAL_LIST=($(rclone lsjson $BACKUP_DIR | jq -r '.[].Name'))
   REMOTE_LIST=($(rclone lsjson $REMOTE_DIR | jq -r '.[].Name'))
   
@@ -47,10 +43,15 @@ backup_to_remote() {
       rclone delete $FILE
     fi
   done
-  echofunc "Copying to remote"
+  echofunc "Copying to remote ${REMOTE_DIR}"
   rclone copy $BACKUP_DIR $REMOTE_DIR --ignore-existing
 }
 ######
+if ! command -v jq &> /dev/null
+then
+  echo "'jq' is not installed. Please install it."
+  exit 1
+fi
 
 # change work dir to /
 cd /
@@ -64,15 +65,20 @@ if ! [[ -e $BACKUP_DIR ]]; then
   mkdir -m 744 $BACKUP_DIR
 fi
 
-# create mariadb.sql
-echofunc "Creating MariaDB backup"
-docker exec $MARIADB_APP /usr/bin/mysqldump -h '127.0.0.1' -u $MARIADB_USER --password=$MARIADB_PWD --all-databases --routines --triggers --events > $MARIADB_FILE
-
 # create backup.tar
 BACKUP_FILE=$BACKUP_DIR/backup_$(date +"%Y-%m-%d_%H-%M-%S").tar.gz
 echofunc "Creating backup <$BACKUP_FILE>"
 tar \
   --exclude="$BACKUP_DIR" \
+  --exclude="/dev" \
+  --exclude="/mnt" \
+  --exclude="/proc" \
+  --exclude="/sys" \
+  --exclude="/tmp" \
+  --exclude="/media" \
+  --exclude="/btrbk_snapshots" \
+  --exclude="/var/lib/docker" \
+  --exclude="**/lost+found" \
   --exclude="**/cache" \
   --exclude="**/.cache" \
   --exclude="**/tmp" \
@@ -89,13 +95,10 @@ tar \
   --exclude="/data/next-cloud/data/**/files_trashbin" \
   --exclude="/data/jellyfin/config/data/metadata/library" \
   --exclude="/data/jellyfin/config/data/transcodes" \
-  --exclude="/data/immich" \
+  --exclude="/data/immich/library/thumbs" \
+  --exclude="/data/immich/library/encoded-video" \
   -czf $BACKUP_FILE \
-  $NEED_BACKUP $MARIADB_FILE
-
-# remove backup.sql
-echofunc "Removing <$MARIADB_FILE>"
-rm "$MARIADB_FILE"
+  /
 
 # remove oldest backup.tar
 REMOVE_COUNT=$(($(ls $BACKUP_DIR | wc -l ) - $MAX_BACKUP_FILE_COUNT))
@@ -109,12 +112,6 @@ chown -R $USER $BACKUP_DIR
 # sync all backup.tar to External Driver or Cloud Driver
 echofunc "Running <backup_to_remote>"
 backup_to_remote
-```
-## restore mysql
-```sh
-docker cp mariadb.sql mariadb-app:/
-docker exec -it mariadb-app /bin/sh
-mysql -u $MARIADB_USER --password=$MARIADB_PWD < mariadb.sql
 ```
 ## crontab task
 ```sh
