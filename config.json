@@ -58,6 +58,11 @@
         "file": "dedit",
         "name": "dedit",
         "description": "docker修改container文件"
+      },
+      {
+        "file": "mysql",
+        "name": "mysql",
+        "description": "mysql常用命令"
       }
     ]
   },
