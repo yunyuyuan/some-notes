@@ -63,6 +63,11 @@
         "file": "mysql",
         "name": "mysql",
         "description": "mysql常用命令"
+      },
+      {
+        "file": "nvidia",
+        "name": "nvidia",
+        "description": "nvidia使用记录"
       }
     ]
   },
