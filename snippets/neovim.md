@@ -20,7 +20,7 @@ vim.g.mapleader = ","
 
 vim.api.nvim_set_keymap('n', '<leader>m', '<cmd>lua require"hop".hint_words()<CR>', { silent = true })
 vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
-
+vim.opt.clipboard = "unnamedplus"
 
 require("lazy").setup({
   {
