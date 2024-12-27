@@ -19,16 +19,10 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 
 vim.api.nvim_set_keymap('n', '<leader>m', '<cmd>lua require"hop".hint_words()<CR>', { silent = true })
-vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
 vim.opt.clipboard = "unnamedplus"
 
+
 require("lazy").setup({
-  {
-    "yunyuyuan/vim-barbaric",
-    init = function()
-      vim.g.barbaric_switchback = 1
-    end,
-  },
   {
     "phaazon/hop.nvim",
     config = function ()
@@ -47,6 +41,22 @@ require("lazy").setup({
   {
     "tpope/vim-repeat",
   },
+  {
+    "gennaro-tedesco/nvim-peekup",
+  },
+  {
+    "keaising/im-select.nvim",
+    config = function()
+        require("im_select").setup({
+          set_previous_events = {},
+        })
+    end,
+  },
+  {
+    "max397574/better-escape.nvim",
+    config = function()
+      require("better_escape").setup()
+    end,
+  }
 })
-
 ```
