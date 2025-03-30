@@ -19,6 +19,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 
 vim.api.nvim_set_keymap('n', '<leader>m', '<cmd>lua require"hop".hint_words()<CR>', { silent = true })
+-- <leader>+l = console.log
+vim.api.nvim_set_keymap('x', '<leader>l', 'y<ESC>o<ESC>iconsole.log(\'<C-r>"\': <C-r>")<ESC>', { noremap = true, silent = true })
 vim.opt.clipboard = "unnamedplus"
 
 
