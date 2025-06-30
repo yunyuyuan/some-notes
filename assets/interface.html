@@ -3,172 +3,163 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>yun yu yuan</title>
+    <title>yunyuyuan 导航</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.47/vue.global.prod.min.js"></script>
     <style>
-        html,
-        body {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
         }
 
         body {
-            background: #e0e6eb;
-            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        #polygon,
         #wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
             display: block;
+            height: 100%;
             width: 100%;
-            height: 100%;
-        }
-
-        #polygon g {
-            mix-blend-mode: lighten;
-        }
-
-        #polygon polygon {
-            stroke: none;
-            fill: white;
-        }
-
-        #wrapper {
-            display: block;
-            height: 100%;
-            overflow-y: scroll;
-        }
-
-        #wrapper:before {
-            display: inline-block;
-            width: 0;
-            height: 100%;
-            vertical-align: middle;
-            content: "";
-        }
-
-        #center-body {
-            display: inline-block;
-            vertical-align: middle;
-            width: calc(100vw - 32px);
+            overflow-y: auto;
         }
 
         #content {
-            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .units {
-            display: flex;
-            align-items: center;
-            align-content: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            border: 1px solid #a7a7a7;
-            border-radius: 10px;
-            margin: 20px 10px 0 10px;
-        }
-
-        .units>p {
-            text-decoration: none;
-            display: block;
-            width: 100vw;
+        .header {
             text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 10px;
+            margin-bottom: 30px;
         }
 
-        #content .units a {
-            font-size: 20px;
-            color: black;
-            padding: 10px 30px;
-            border: 1px solid white;
-            border-radius: 6px;
-            text-decoration: none;
-            background: transparent;
-            transition: all .1s linear;
-            margin: 10px;
-        }
-
-        #content .units a:not(.disabled):hover {
-            background: black;
-            color: white;
-            border-color: white;
-        }
-
-        #content .units a.disabled {
-            cursor: not-allowed;
-            background: rgb(173 173 173);
-            color: black;
-            border-color: #919191;
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 10px;
         }
 
         .switch-container {
-            margin: 10px 0;
             display: flex;
-            align-items: center;
             justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 10px;
+            margin: 0 auto 20px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
+
         .switch-container span {
             cursor: pointer;
-            font-size: 18px;
-            line-height: 20px;
-            padding: 6px 10px;
+            font-size: 16px;
+            padding: 8px 16px;
             border-radius: 8px;
-            transition: all .15s linear;
-            margin: 0 8px;
-            background: white;
-            color: black;
+            transition: all 0.2s ease;
+            margin: 0 4px;
+            color: #4a5568;
         }
+
         .switch-container span:hover {
-            background: rgb(224, 224, 224);
+            background: rgba(0, 0, 0, 0.05);
         }
+
         .switch-container span.active {
-            background: aqua;
+            background: #3182ce;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .units {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            margin: 0 0 20px 0;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .units > p {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+            padding: 10px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .links-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .units a {
+            font-size: 16px;
+            color: #4a5568;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            background: white;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .units a:not(.disabled):hover {
+            background: #3182ce;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .units a.disabled {
+            cursor: not-allowed;
+            background: #edf2f7;
+            color: #a0aec0;
+        }
+
+        @media (max-width: 768px) {
+            .switch-container {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 10px 5px;
+            }
+            
+            .units a {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <svg id="polygon" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid slice">
-        <defs>
-            <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0" color-interpolation="sRGB">
-                <stop id="stop1a" offset="0%" stop-color="#12a3b4"></stop>
-                <stop id="stop1b" offset="100%" stop-color="#ff509e"></stop>
-            </linearGradient>
-            <linearGradient id="grad2" x1="0" y1="0" x2="1" y2="0" color-interpolation="sRGB">
-                <stop id="stop2a" offset="0%" stop-color="#e3bc13"></stop>
-                <stop id="stop2b" offset="100%" stop-color="#00a78f"></stop>
-            </linearGradient>
-        </defs>
-        <rect id="rect1" x="0" y="0" width="1600" height="600" stroke="none" fill="url(#grad1)"></rect>
-        <rect id="rect2" x="0" y="0" width="1600" height="600" stroke="none" fill="url(#grad2)"></rect>
-    </svg>
     <div id="wrapper">
-        <div id="center-body">
-            <div id="content">
-                <div class="switch-container">
-                    <span @click="currentType='direct'" :class="{active: currentType==='direct'}">直连</span>
-                    <span @click="currentType='cf'" :class="{active: currentType==='cf'}">cf tunnel</span>
-                    <span @click="currentType='ts'" :class="{active: currentType==='ts'}">tailscale</span>
-                    <span @click="currentType='cdn'" :class="{active: currentType==='cdn'}">cf cdn</span>
-                    <span @click="currentType='vpn'" :class="{active: currentType==='vpn'}">vpn</span>
-                </div>
-                <div class="units" v-for="machine of machines">
-                    <p>{{ machine.name }}</p>
-                    <a v-for="domain of machine.domains" :href="domain.domain.value || null" :class="{disabled: !domain.domain.value}" @click="clickEvent($event, domain)">{{ domain.name }}</a>
+        <div id="content">
+            <div class="switch-container">
+                <span @click="currentType='direct'" :class="{active: currentType==='direct'}">直连</span>
+                <span @click="currentType='cf'" :class="{active: currentType==='cf'}">CF Tunnel</span>
+                <span @click="currentType='ts'" :class="{active: currentType==='ts'}">Tailscale</span>
+                <span @click="currentType='vpn'" :class="{active: currentType==='vpn'}">VPN</span>
+                <span @click="currentType='cdn'" :class="{active: currentType==='cdn'}">CF CDN</span>
+            </div>
+            <div class="units" v-for="machine of machines">
+                <p>{{ machine.name }}</p>
+                <div class="links-container">
+                    <a v-for="domain of machine.domains" :href="domain.domain.value || null" 
+                       :class="{disabled: !domain.domain.value}" 
+                       @click="clickEvent($event, domain)">{{ domain.name }}</a>
                 </div>
             </div>
         </div>
@@ -178,7 +169,7 @@
     Vue.createApp({
         setup() {
             const currentType = Vue.ref('direct');
-            fetch('https://ipv6-test.yunyuyuan.net').then((res) => {
+            fetch('https://i-d.yunyuyuan.net:8888').then((res) => {
                 if (res.status !== 200) {
                     currentType.value = 'cf';
                 }
@@ -203,11 +194,11 @@
                 })
             }
             
-            function commonRef(s, withPort = true) {
-                        return getDomainRef(`https://${s}-d.yunyuyuan.net${withPort ? ':8888': ''}`, 
-                                    `https://${s}-cf.yunyuyuan.net`,
-                                    `https://${s}-ts.yunyuyuan.net`,
-                                    `https://${s}-v.yunyuyuan.net`, withPort ? '' : `https://${s}-cdn.yunyuyuan.net`);
+            function commonRef(s, withPort = true, suffix = '') {
+                    return getDomainRef(`https://${s}-d.yunyuyuan.net${withPort ? ':8888': ''}${suffix}`, 
+                                    `https://${s}-cf.yunyuyuan.net${suffix}`,
+                                    `https://${s}-ts.yunyuyuan.net${suffix}`,
+                                    `https://${s}-v.yunyuyuan.net${suffix}`, withPort ? '' : `https://${s}-cdn.yunyuyuan.net${suffix}`);
             }
             
             function sameRef(s) {
@@ -223,24 +214,12 @@
                 }
             }
             
-            function getSubscription(s) {
-                const pwd = prompt('输入密码');
-                if (pwd) {
-                    const link = document.createElement('a');
-                    link.href = `${s}/yunyuyuan-${pwd}`;
-                    link.target = '_blank';
-                    document.body.appendChild(link);
-                    link.click();
-                    link.remove();
-                }
-            }
-            
             return {
                 currentType,
                 clickEvent,
                 machines: [
                     {
-                        name: 'Manjaro',
+                        name: 'Arch',
                         domains: [
                             {
                                 name: '云盘',
@@ -259,16 +238,16 @@
                                 domain: commonRef('money'),
                             },
                             {
-                                name: 'aria2',
-                                domain: commonRef('aria'),
-                            },
-                            {
                                 name: '状态',
                                 domain: commonRef('status'),
                             },
                             {
                                 name: '测速',
                                 domain: commonRef('speed'),
+                            },
+                            {
+                                name: '照片',
+                                domain: commonRef('photo'),
                             },
                             {
                                 name: 'filebrowser',
@@ -291,23 +270,54 @@
                                 domain: commonRef('novnc'),
                             },
                             {
-                                name: 'SSH-CF',
-                                domain: getDomainRef('', `https://ssh-cf.yunyuyuan.net`, '', '', ''),
+                                name: 'hass',
+                                domain: commonRef('hass'),
                             },
                             {
-                                name: 'VNC-CF',
-                                domain: getDomainRef('', `https://vnc-cf.yunyuyuan.net`, '', '', ''),
+                                name: 'aria2',
+                                domain: commonRef('aria'),
+                            },
+                            {
+                                name: 'rss',
+                                domain: commonRef('rss'),
+                            },
+                            {
+                                name: 'docker',
+                                domain: commonRef('docker'),
+                            },
+                            {
+                                name: 'note',
+                                domain: commonRef('note'),
+                            },
+                            {
+                                name: 'blog',
+                                domain: commonRef('blog-drone'),
+                            },
+                            {
+                                name: 'drone',
+                                domain: commonRef('drone'),
+                            },
+                            {
+                                name: 'gotify',
+                                domain: commonRef('gotify'),
+                            },
+                            {
+                                name: 'music',
+                                domain: commonRef('music'),
+                            },
+                            {
+                                name: 'st',
+                                domain: commonRef('st'),
+                            },
+                            {
+                                name: 'SSH-CF',
+                                domain: sameRef(`https://ssh-cf.yunyuyuan.net`),
                             },
                         ],
                     },
                     {
                         name: 'Scaleway ipv6',
                         domains: [
-                            {
-                                name: '机场',
-                                domain: commonRef('v2ray-sw', false),
-                                click: getSubscription,
-                            },
                             {
                                 name: 'ttyd',
                                 domain: commonRef('ttyd-sw', false),
@@ -322,7 +332,7 @@
                             },
                             {
                                 name: 'SSH-CF',
-                                domain: getDomainRef('', `https://ssh-sw-cf.yunyuyuan.net`, '', '', ''),
+                                domain: sameRef(`https://ssh-sw-cf.yunyuyuan.net`),
                             },
                         ],
                     },
@@ -330,20 +340,20 @@
                         name: 'Raspberry Pi',
                         domains: [
                             {
-                                name: '监控',
-                                domain: commonRef('live'),
+                                name: 'openwrt',
+                                domain: commonRef('pi-router'),
+                            },
+                            {
+                                name: 'clash',
+                                domain: commonRef('clash-pi-router', true, '/ui/yacd'),
                             },
                             {
                                 name: 'ttyd',
-                                domain: commonRef('ttyd-pi'),
+                                domain: commonRef('ttyd-pi-router'),
                             },
                             {
                                 name: 'SSH-CF',
-                                domain: getDomainRef('', `https://ssh-pi-cf.yunyuyuan.net`, '', '', ''),
-                            },
-                            {
-                                name: 'VNC-CF',
-                                domain: getDomainRef('', `https://vnc-pi-cf.yunyuyuan.net`, '', '', ''),
+                                domain: sameRef(`https://ssh-pi-router-cf.yunyuyuan.net`),
                             },
                         ],
                     },
@@ -351,37 +361,25 @@
                         name: 'Router',
                         domains: [
                             {
-                                name: '路由器',
-                                domain: getDomainRef('http://router-d.yunyuyuan.net:8888', '', '', 'http://router-v.yunyuyuan.net', ''),
+                                name: 'openwrt',
+                                domain: commonRef('router'),
+                            },
+                            {
+                                name: 'clash',
+                                domain: commonRef('clash-router', true, '/ui/yacd'),
                             },
                             {
                                 name: 'ttyd',
-                                domain: getDomainRef('http://router-d.yunyuyuan.net:7681', '', '', 'http://router-v.yunyuyuan.net:7681', ''),
+                                domain: getDomainRef('ttyd-router'),
                             },
                         ],
                     },
                     {
-                        name: 'Frp',
+                        name: 'Other',
                         domains: [
                             {
-                                name: '控制台',
-                                domain: sameRef('https://frp.halberd.cn'),
-                            },
-                            {
-                                name: '云盘',
-                                domain: sameRef('https://file.halberd.cn'),
-                            },
-                            {
-                                name: '文件',
-                                domain: sameRef('https://fb.halberd.cn'),
-                            },
-                            {
-                                name: 'bitTorrent',
-                                domain: sameRef('https://download.halberd.cn'),
-                            },
-                            {
-                                name: '路由器',
-                                domain: sameRef('https://router.halberd.cn'),
+                                name: 'openwebui',
+                                domain: sameRef('http://localhost:16020'),
                             },
                         ],
                     },
@@ -389,320 +387,5 @@
             }
         }
     }).mount('#content')
-
-    function init(showStats) {
-        // stats
-        if (showStats) {
-            var stats = new Stats();
-            stats.domElement.style.position = 'absolute';
-            stats.domElement.style.left = '0';
-            stats.domElement.style.top = '0';
-            document.body.appendChild(stats.domElement);
-            requestAnimationFrame(function updateStats() {
-                stats.update();
-                requestAnimationFrame(updateStats);
-            });
-        }
-
-        // init
-        var svg = document.getElementById('polygon');
-        tesselation.setup(svg);
-        gradients.setup();
-
-        var lastTransitionAt, transitionDelay = 5500, transitionDuration = 3000;
-
-        function playNextTransition() {
-            tesselation.next(transitionDuration);
-            gradients.next(transitionDuration);
-        };
-
-        function tick(time) {
-            if (!lastTransitionAt || time - lastTransitionAt > transitionDelay) {
-                lastTransitionAt = time;
-                playNextTransition();
-            }
-            window.requestAnimationFrame(tick);
-        }
-        window.requestAnimationFrame(tick);
-    }
-
-    //////////////////////////////
-    // Delaunay Triangulation
-    //////////////////////////////
-
-    var calcDelaunayTriangulation = (function () {
-        var EPSILON = 1.0 / 1048576.0;
-        function getSuperT(vertices) {
-            var xMin = Number.POSITIVE_INFINITY, yMin = Number.POSITIVE_INFINITY,
-                xMax = Number.NEGATIVE_INFINITY, yMax = Number.NEGATIVE_INFINITY,
-                i, xDiff, yDiff, maxDiff, xCenter, yCenter;
-            for (i = vertices.length; i--;) {
-                if (vertices[i][0] < xMin) xMin = vertices[i][0];
-                if (vertices[i][0] > xMax) xMax = vertices[i][0];
-                if (vertices[i][1] < yMin) yMin = vertices[i][1];
-                if (vertices[i][1] > yMax) yMax = vertices[i][1];
-            }
-            xDiff = xMax - xMin;
-            yDiff = yMax - yMin;
-            maxDiff = Math.max(xDiff, yDiff);
-            xCenter = xMin + xDiff * 0.5;
-            yCenter = yMin + yDiff * 0.5;
-            return [
-                [xCenter - 20 * maxDiff, yCenter - maxDiff],
-                [xCenter, yCenter + 20 * maxDiff],
-                [xCenter + 20 * maxDiff, yCenter - maxDiff]
-            ];
-        }
-        function circumcircle(vertices, i, j, k) {
-            var xI = vertices[i][0], yI = vertices[i][1],
-                xJ = vertices[j][0], yJ = vertices[j][1],
-                xK = vertices[k][0], yK = vertices[k][1],
-                yDiffIJ = Math.abs(yI - yJ), yDiffJK = Math.abs(yJ - yK),
-                xCenter, yCenter, m1, m2, xMidIJ, xMidJK, yMidIJ, yMidJK, xDiff, yDiff;
-            // bail condition
-            if (yDiffIJ < EPSILON && yDiffJK < EPSILON)
-                throw new Error("Can't get circumcircle since all 3 points are y-aligned");
-            // calc circumcircle center x/y, radius
-            m1 = -((xJ - xI) / (yJ - yI));
-            m2 = -((xK - xJ) / (yK - yJ));
-            xMidIJ = (xI + xJ) / 2.0;
-            xMidJK = (xJ + xK) / 2.0;
-            yMidIJ = (yI + yJ) / 2.0;
-            yMidJK = (yJ + yK) / 2.0;
-            xCenter = (yDiffIJ < EPSILON) ? xMidIJ :
-                (yDiffJK < EPSILON) ? xMidJK :
-                    (m1 * xMidIJ - m2 * xMidJK + yMidJK - yMidIJ) / (m1 - m2);
-            yCenter = (yDiffIJ > yDiffJK) ?
-                m1 * (xCenter - xMidIJ) + yMidIJ :
-                m2 * (xCenter - xMidJK) + yMidJK;
-            xDiff = xJ - xCenter;
-            yDiff = yJ - yCenter;
-            // return
-            return { i: i, j: j, k: k, x: xCenter, y: yCenter, r: xDiff * xDiff + yDiff * yDiff };
-        }
-        function dedupeEdges(edges) {
-            var i, j, a, b, m, n;
-            for (j = edges.length; j;) {
-                b = edges[--j]; a = edges[--j];
-                for (i = j; i;) {
-                    n = edges[--i]; m = edges[--i];
-                    if ((a === m && b === n) || (a === n && b === m)) {
-                        edges.splice(j, 2); edges.splice(i, 2);
-                        break;
-                    }
-                }
-            }
-        }
-        return function (vertices) {
-            var n = vertices.length,
-                i, j, indices, st, candidates, locked, edges, dx, dy, a, b, c;
-            // bail if too few / too many verts
-            if (n < 3 || n > 2000)
-                return [];
-            // copy verts and sort indices by x-position
-            vertices = vertices.slice(0);
-            indices = new Array(n);
-            for (i = n; i--;)
-                indices[i] = i;
-            indices.sort(function (i, j) {
-                return vertices[j][0] - vertices[i][0];
-            });
-            // supertriangle
-            st = getSuperT(vertices);
-            vertices.push(st[0], st[1], st[2]);
-            // init candidates/locked tris list
-            candidates = [circumcircle(vertices, n + 0, n + 1, n + 2)];
-            locked = [];
-            edges = [];
-            // scan left to right
-            for (i = indices.length; i--; edges.length = 0) {
-                c = indices[i];
-                // check candidates tris against point
-                for (j = candidates.length; j--;) {
-                    // lock tri if point to right of circumcirc
-                    dx = vertices[c][0] - candidates[j].x;
-                    if (dx > 0.0 && dx * dx > candidates[j].r) {
-                        locked.push(candidates[j]);
-                        candidates.splice(j, 1);
-                        continue;
-                    }
-                    // point outside circumcirc = leave candidates
-                    dy = vertices[c][1] - candidates[j].y;
-                    if (dx * dx + dy * dy - candidates[j].r > EPSILON)
-                        continue;
-                    // point inside circumcirc = break apart, save edges
-                    edges.push(
-                        candidates[j].i, candidates[j].j,
-                        candidates[j].j, candidates[j].k,
-                        candidates[j].k, candidates[j].i
-                    );
-                    candidates.splice(j, 1);
-                }
-                // new candidates from broken edges
-                dedupeEdges(edges);
-                for (j = edges.length; j;) {
-                    b = edges[--j];
-                    a = edges[--j];
-                    candidates.push(circumcircle(vertices, a, b, c));
-                }
-            }
-            // close candidates tris, remove tris touching supertri verts
-            for (i = candidates.length; i--;)
-                locked.push(candidates[i]);
-            candidates.length = 0;
-            for (i = locked.length; i--;)
-                if (locked[i].i < n && locked[i].j < n && locked[i].k < n)
-                    candidates.push(locked[i].i, locked[i].j, locked[i].k);
-            // done
-            return candidates;
-        };
-    })();
-
-    var tesselation = (function () {
-        var svg, svgW, svgH, prevGroup;
-
-        function createRandomTesselation() {
-            var wW = window.innerWidth;
-            var wH = window.innerHeight;
-
-            var gridSpacing = 250, scatterAmount = 0.75;
-            var gridSize, i, x, y;
-
-            if (wW / wH > svgW / svgH) { // window wider than svg = use width for gridSize
-                gridSize = gridSpacing * svgW / wW;
-            } else { // window taller than svg = use height for gridSize
-                gridSize = gridSpacing * svgH / wH;
-            }
-
-            var vertices = [];
-            var xOffset = (svgW % gridSize) / 2, yOffset = (svgH % gridSize) / 2;
-            for (x = Math.floor(svgW / gridSize) + 1; x >= -1; x--) {
-                for (y = Math.floor(svgH / gridSize) + 1; y >= -1; y--) {
-                    vertices.push(
-                        [
-                            xOffset + gridSize * (x + scatterAmount * (Math.random() - 0.5)),
-                            yOffset + gridSize * (y + scatterAmount * (Math.random() - 0.5))
-                        ]
-                    );
-                }
-            }
-
-            var triangles = calcDelaunayTriangulation(vertices);
-
-            var group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-            var polygon;
-            for (i = triangles.length; i;) {
-                polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-                polygon.setAttribute('points',
-                    vertices[triangles[--i]][0] + ',' + vertices[triangles[i]][1] + ' ' +
-                    vertices[triangles[--i]][0] + ',' + vertices[triangles[i]][1] + ' ' +
-                    vertices[triangles[--i]][0] + ',' + vertices[triangles[i]][1]
-                );
-                group.appendChild(polygon);
-            }
-
-            return group;
-        }
-
-        return {
-            setup: function (svgElement) {
-                svg = svgElement;
-                var vb = svg.getAttribute('viewBox').split(/\D/g);
-                svgW = vb[2];
-                svgH = vb[3];
-            },
-            next: function (t) {
-                var toRemove, i, n;
-                t /= 1000;
-
-                if (prevGroup && prevGroup.children && prevGroup.children.length) {
-                    toRemove = prevGroup;
-                    n = toRemove.children.length;
-                    for (i = n; i--;) {
-                        TweenMax.to(toRemove.children[i], t * 0.4, { opacity: 0, delay: t * (0.3 * i / n) });
-                    }
-                    TweenMax.delayedCall(t * (0.7 + 0.05), function (group) { svg.removeChild(group); }, [toRemove], this);
-                }
-                var g = createRandomTesselation();
-                n = g.children.length;
-                for (i = n; i--;) {
-                    TweenMax.fromTo(g.children[i], t * 0.4, { opacity: 0 }, { opacity: 0.3 + 0.25 * Math.random(), delay: t * (0.3 * i / n + 0.3), ease: Back.easeOut });
-                }
-                svg.appendChild(g);
-                prevGroup = g;
-            }
-        }
-    })();
-
-    //////////////////////////////
-    // Gradients
-    //////////////////////////////
-
-    var gradients = (function () {
-        var grad1, grad2, showingGrad1;
-
-        // using colors from IBM Design Colors this time
-        var colors = [ // 14 colors - use 3-5 span
-            '#3c6df0', // ultramarine50
-            '#12a3b4', // aqua40
-            '#00a78f', // teal40
-            '#00aa5e', // green40
-            '#81b532', // lime30
-            '#e3bc13', // yellow20
-            '#ffb000', // gold20
-            '#fe8500', // orange30
-            '#fe6100', // peach40
-            '#e62325', // red50
-            '#dc267f', // magenta50
-            '#c22dd5', // purple50
-            '#9753e1', // violet50
-            '#5a3ec8'  // indigo60
-        ];
-
-        function assignRandomColors(gradObj) {
-            var rA = Math.floor(colors.length * Math.random());
-            var rB = Math.floor(Math.random() * 3) + 3; // [3 - 5]
-            rB = (rA + (rB * (Math.random() < 0.5 ? -1 : 1)) + colors.length) % colors.length;
-            gradObj.stopA.setAttribute('stop-color', colors[rA]);
-            gradObj.stopB.setAttribute('stop-color', colors[rB]);
-        }
-
-        return {
-            setup: function () {
-                showingGrad1 = false;
-                grad1 = {
-                    stopA: document.getElementById('stop1a'),
-                    stopB: document.getElementById('stop1b'),
-                    rect: document.getElementById('rect1')
-                };
-                grad2 = {
-                    stopA: document.getElementById('stop2a'),
-                    stopB: document.getElementById('stop2b'),
-                    rect: document.getElementById('rect2')
-                };
-                grad1.rect.style.opacity = 0;
-                grad2.rect.style.opacity = 0;
-            },
-            next: function (t) {
-                t /= 1000;
-
-                var show, hide;
-                if (showingGrad1) {
-                    hide = grad1;
-                    show = grad2;
-                } else {
-                    hide = grad2;
-                    show = grad1;
-                }
-                showingGrad1 = !showingGrad1;
-
-                TweenMax.to(hide.rect, 0.55 * t, { opacity: 0, delay: 0.2 * t, ease: Sine.easeOut });
-                assignRandomColors(show);
-                TweenMax.to(show.rect, 0.65 * t, { opacity: 1, ease: Sine.easeIn });
-            }
-        };
-    })();
-    init();
 </script>
-
 </html>
