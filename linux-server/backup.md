@@ -141,14 +141,21 @@ $USER_DIR/.local/share/pnpm
 $USER_DIR/.npm
 $USER_DIR/.nuget
 $USER_DIR/.vscode-server
+$USER_DIR/.local/share/claude
+$USER_DIR/.local/share/uv
+$USER_DIR/.local/bin/uv
 /data/next-cloud/data/**/preview
 /data/next-cloud/data/**/files_trashbin
 /data/next-cloud/data/**/files_versions
-/data/jellyfin/config/data/metadata/library
+/data/next-cloud/custom_apps
+/data/next-cloud/apps
+/data/jellyfin/config/data/metadata
 /data/jellyfin/config/data/transcodes
 /data/immich/library/thumbs
 /data/immich/library/encoded-video
 /data/qbittorrent/downloads
+/data/qbittorrent/VueTorrent
+/data/code-server/config/extensions
 EOF
 
 # Run the backup
@@ -231,6 +238,44 @@ Restore the MariaDB dump and load it back:
 restic restore latest --target / --include /var/backups/mariadb
 gunzip < /var/backups/mariadb/all-databases_YYYY-MM-DD.sql.gz | mariadb
 ```
+
+## Finding what takes up space in a snapshot
+
+To decide what to add to the exclude list, inspect a snapshot interactively with
+`ncdu` — same experience as browsing local disk usage, drill down level by level.
+
+```sh
+sudo pacman -S ncdu fuse2          # fuse2 provides `fusermount`, needed by `restic mount`
+
+mkdir -p /mnt/restic
+restic mount /mnt/restic &         # mount in background
+
+ncdu /mnt/restic/snapshots/latest
+# or a quick one-off:
+# du -h /mnt/restic/snapshots/latest --max-depth=2 | sort -rh | head -30
+
+fusermount -u /mnt/restic          # unmount when done
+```
+
+::: warning fuse2 gotcha
+`restic mount` looks for the `fusermount` binary, which ships in the **`fuse2`**
+package — not `fuse3`. If you only have `fuse3` you get
+`fusermount: executable file not found in $PATH`. Install `fuse2` (it can
+coexist with `fuse3`).
+:::
+
+::: tip
+If you'd rather not mount anything, list the biggest files directly — no FUSE needed:
+
+```sh
+restic ls -l latest | sort -k4 -n -r | head -30 \
+  | awk '{printf "%10.1f MB  %s\n", $4/1024/1024, $7}'
+```
+:::
+
+Note: sizes shown are **logical** file sizes, not the deduplicated/compressed
+space they occupy in the repo. For real repo usage see [Maintenance](#maintenance)
+(`restic stats`).
 
 ## Removing files you forgot to exclude
 
